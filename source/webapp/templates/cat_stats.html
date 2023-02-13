@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title></title>
+</head>
+<body>
+    <div class="container">
+        <h1>Характеристики питомца:</h1>
+        {% if happines >= 40 and happines <= 60 and awake_status == True %}
+            <img src="{% static 'media/normal.jpg' %}" alt="кот" class="form_img">
+        {% elif happines < 40 and awake_status == True %}
+            <img src="{% static 'media/sad.jpg' %}" alt="кот" class="form_img">
+        {% elif happines > 60 and awake_status == True %}
+            <img src="{% static 'media/happy.jpg' %}" alt="кот" class="form_img">
+        {% elif awake_status == False %}
+            <img src="{% static 'media/sleep.jpg' %}" alt="кот" class="form_img">
+        {% endif %}
+        <p>Кличка: {{ name }}</p>
+        <p>Возраст: {{ age }}</p>
+        <p>Сытость: {{ satiety }}</p>
+        <p>Счастье: {{ happines }}</p>
+        <br>
+    </div>
+    <div class="container">
+        <form action="/cat_stats.html" method="post">
+            {% csrf_token %}
+            <label for="action">Actions</label>
+            <select id="action" name="action" class="">
+                {% for action in actions %}
+                <option value="{{ action }}">{{ action }}</option>
+                <hr>
+                {% endfor %}
+            </select>
+            <br>
+            <input type="submit" value="Подтвердить" class="btn">
+        </form>
+    </div>
+</body>
+</html>
